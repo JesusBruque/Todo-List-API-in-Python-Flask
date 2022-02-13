@@ -55,7 +55,10 @@ def post_todos():
 
 @app.route('/todos/<id>', methods=['DELETE'])
 def delete_todos(id):
-    todos = Todo.query.delete(id)
+    todos = Todo.query.get(id)
+    db.session.delete(todos)
+    db.session.commit()
+
     return jsonify(todos.serialize()), 200
 
 # this only runs if `$ python src/main.py` is executed
